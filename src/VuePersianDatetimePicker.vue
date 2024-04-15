@@ -907,7 +907,7 @@ export default {
       updateNowInterval: null,
       locales: ['fa'],
       localeData: coreModule.locale,
-      windowWidth: window.innerWidth,
+      windowWidth: window.innerWidth
     }
   },
   computed: {
@@ -1041,7 +1041,7 @@ export default {
       if (!this.minDate && !this.maxDate) return true
       let now = this.now,
         min = this.minDate && this.minDate <= now,
-        max = this.maxDate && now <= this.maxDate
+        max = this.maxDate
 
       if (this.type === 'time') {
         if (this.minDate) {
