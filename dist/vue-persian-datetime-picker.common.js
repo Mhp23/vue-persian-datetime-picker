@@ -521,7 +521,7 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6004b8be-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/VuePersianDatetimePicker.vue?vue&type=template&id=39d0deac
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6004b8be-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/VuePersianDatetimePicker.vue?vue&type=template&id=593f0ad6
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',{staticClass:"vpd-main",class:{ 'vpd-is-popover': _vm.isPopover },attrs:{"data-type":_vm.type,"data-locale":_vm.localeData.name,"data-locale-dir":_vm.localeData.config.dir}},[(!_vm.customInputElement)?_c('span',{ref:"inputGroup",class:['vpd-input-group', { 'vpd-disabled': _vm.disabled }]},[_c('label',{staticClass:"vpd-icon-btn",style:({ 'background-color': _vm.color }),attrs:{"for":_vm.id},on:{"click":function($event){$event.preventDefault();$event.stopPropagation();_vm.visible = !_vm.visible}}},[_vm._t("label",[(_vm.type === 'time')?_c('time-icon',{attrs:{"width":"16px","height":"16px"}}):_c('calendar-icon',{attrs:{"width":"16px","height":"16px"}}),(_vm.label)?_c('span',{domProps:{"textContent":_vm._s(_vm.label)}}):_vm._e()])],2),_c('input',_vm._b({ref:"input",class:[_vm.inputClass, { 'vpd-is-editable': _vm.editable }],attrs:{"id":_vm.id,"type":"text","name":_vm.name,"placeholder":_vm.placeholder,"disabled":_vm.disabled},domProps:{"value":_vm.displayValue},on:{"focus":_vm.focus,"blur":_vm.setOutput,"keydown":function($event){if(!$event.type.indexOf('key')&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }return _vm.setOutput($event)}}},'input',_vm.inputAttrs,false)),(_vm.altName)?_c('input',{attrs:{"type":"hidden","name":_vm.altName},domProps:{"value":_vm.altFormatted}}):_vm._e(),(_vm.clearable && !_vm.disabled && _vm.displayValue)?_c('i',{staticClass:"vpd-clear-btn",on:{"click":_vm.clearValue}},[_vm._t("clear-btn",[_vm._v("x")],null,{ vm: _vm.vm })],2):_vm._e()]):(_vm.altName)?_c('input',{attrs:{"type":"hidden","name":_vm.altName},domProps:{"value":_vm.altFormatted}}):_vm._e(),_c('transition',{attrs:{"name":_vm.isPopover ? '' : 'vpd-fade-scale'}},[(_vm.visible)?_c('div',{ref:"picker",class:[
         'vpd-wrapper',
         ("vpd-dir-" + (_vm.localeData.config.dir)),
@@ -574,7 +574,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/VuePersianDatetimePicker.vue?vue&type=template&id=39d0deac
+// CONCATENATED MODULE: ./src/VuePersianDatetimePicker.vue?vue&type=template&id=593f0ad6
 
 // EXTERNAL MODULE: ./src/assets/scss/style.scss
 var style = __webpack_require__("78a7");
@@ -3371,6 +3371,8 @@ const popover = {
       core: coreModule,
       now: coreModule.moment(),
       date: {},
+      isSubmit: false,
+      prevSelectedDates: [],
       selectedDates: [],
       hoveredItem: null,
       visible: false,
@@ -3687,6 +3689,8 @@ const popover = {
     },
     visible(val) {
       if (val) {
+        this.isSubmit = false;
+        this.prevSelectedDates = this.selectedDates;
         if (this.disabled) return this.visible = false;
         if (this.type === 'datetime' && this.view === 'day') this.goStep('d');
         if (this.view !== 'day') this.goStep(this.shortCodes[this.view] || 'd');
@@ -3699,6 +3703,9 @@ const popover = {
         this.$nextTick(this.setPlacement);
         this.$emit('open', this);
       } else {
+        if (!this.isSubmit && this.range) {
+          this.selectedDates = this.prevSelectedDates;
+        }
         if (this.inline && !this.disabled) return this.visible = true;
         this.$emit('close', this);
       }
@@ -3877,6 +3884,7 @@ const popover = {
       if (['month', 'year-month'].indexOf(this.type) !== -1) this.selectedDates = [date.clone()];
     },
     submit(close = true) {
+      this.isSubmit = true;
       let steps = this.steps.length - 1;
       let selected = this.selectedDates;
       if (this.isCompactTime && this.type === 'datetime') steps -= 1;

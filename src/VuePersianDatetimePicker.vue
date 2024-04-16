@@ -887,6 +887,8 @@ export default {
       core: coreModule,
       now: coreModule.moment(),
       date: {},
+      isSubmit: false,
+      prevSelectedDates: [],
       selectedDates: [],
       hoveredItem: null,
       visible: false,
@@ -1228,6 +1230,8 @@ export default {
     },
     visible(val) {
       if (val) {
+        this.isSubmit = false
+        this.prevSelectedDates = this.selectedDates
         if (this.disabled) return (this.visible = false)
         if (this.type === 'datetime' && this.view === 'day') this.goStep('d')
         if (this.view !== 'day') this.goStep(this.shortCodes[this.view] || 'd')
@@ -1240,6 +1244,9 @@ export default {
         this.$nextTick(this.setPlacement)
         this.$emit('open', this)
       } else {
+        if (!this.isSubmit && this.range) {
+          this.selectedDates = this.prevSelectedDates
+        }
         if (this.inline && !this.disabled) return (this.visible = true)
         this.$emit('close', this)
       }
@@ -1427,6 +1434,8 @@ export default {
         this.selectedDates = [date.clone()]
     },
     submit(close = true) {
+      this.isSubmit = true
+
       let steps = this.steps.length - 1
       let selected = this.selectedDates
       if (this.isCompactTime && this.type === 'datetime') steps -= 1
