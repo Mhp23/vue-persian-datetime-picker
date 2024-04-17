@@ -1525,7 +1525,11 @@ export default {
       if (!this.hasStep('t')) now.set({ hour: 0, minute: 0, second: 0 })
       this.date = now.clone()
       this.time = now.clone()
-      this.selectedDates = [now.clone()]
+      if (this.selectedDates[0]) {
+        this.selectedDates = [this.selectedDates[0], now.clone()]
+      } else {
+        this.selectedDates = [now.clone()]
+      }
     },
     setType() {
       switch (this.type) {
