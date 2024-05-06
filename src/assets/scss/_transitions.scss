@@ -37,7 +37,7 @@
   opacity: 0;
 }
 
-.direction-prev {
+.direction-next {
   .slideX-leave-to {
     transform: translateX(-100%);
   }
@@ -47,7 +47,7 @@
   }
 }
 
-.direction-next {
+.direction-prev {
   .slideX-leave-to {
     transform: translateX(100%);
   }
@@ -130,7 +130,7 @@
 }
 
 .#{$prefix}dir-rtl {
-  .direction-prev {
+  .direction-next {
     .slideX-leave-to {
       transform: translateX(100%);
     }
@@ -140,7 +140,7 @@
     }
   }
 
-  .direction-next {
+  .direction-prev {
     .slideX-leave-to {
       transform: translateX(-100%);
     }
