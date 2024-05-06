@@ -1043,7 +1043,7 @@ export default {
       if (!this.minDate && !this.maxDate) return true
       let now = this.now,
         min = this.minDate && this.minDate <= now,
-        max = this.maxDate
+        max = this.maxDate && now <= this.maxDate
 
       if (this.type === 'time') {
         if (this.minDate) {
