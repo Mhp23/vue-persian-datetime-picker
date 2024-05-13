@@ -103,6 +103,8 @@
 
 .#{$prefix}content {
   opacity: 1;
+  overflow: hidden;
+  border-radius: 0.375rem;
   transition: all .4s cubic-bezier(0.25, 0.1, 0.17, 1.84);
   text-align: right;
   direction: rtl;
